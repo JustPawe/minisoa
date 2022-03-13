@@ -1,0 +1,51 @@
+#!/bin/bash
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+case "$1" in
+'new')
+    shift 1
+    python3 create-service.py
+;;
+'start')
+    shift 1
+    docker-compose up -d
+    python3 orchestrator.py "$@"
+;;
+
+'stop')
+    shift 1
+    docker-compose down
+;;
+'check')
+    shift 1
+    if [ -x "$(command -v docker)" ]; then
+        echo -e "${GREEN}Docker installed"
+        # command
+    else
+        echo -e "${RED}Install docker"
+        # command
+    fi
+    if [ -x "$(command -v docker-compose)" ]; then
+        echo -e "${GREEN}Docker-compose installed"
+        # command
+    else
+        echo -e "${RED}Install docker-compose"
+        # command
+    fi
+;;
+'--help')
+	shift 1
+	printf "%s\n" "Usage of /minisoa script:"
+	printf "%s\n" " "
+	printf "%s\n" "Options:"
+	printf "%s\t\t%s\n" "--help" "Shows all available flags"
+	printf "%s\t\t%s\n" "start" "Initializes the docker containers and the orchestrator with default file"
+    printf "%s\t\t%s\n" "start -f" "Initializes the docker containers and the orchestrator with custom file"
+	printf "%s\t\t%s\n" "stop" "Stops the docker-containers"
+	printf "%s\t%s\n" "check" "Checks if Docker and Docker-compose are installed"
+	printf "%s\t\t%s\n" "new"	"Creates new service"
+;;
+esac
