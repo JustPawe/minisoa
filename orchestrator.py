@@ -191,6 +191,11 @@ class Main:
         response = requests.post(targetUrl, data = inputs, headers=headers)
         return json.loads(response.text)
 
+    def jsonGetRequest(targetUrl):
+        headers = {'Accept': 'application/json'}
+        response = requests.post(targetUrl, headers=headers)
+        return json.loads(response.text)
+
     def handleCondition(condition, services, variables):
         conditionVal = Main.calculateInput(condition.conditionVal, services, variables)
         expression = str(conditionVal) + condition.expression
@@ -228,8 +233,21 @@ class Main:
             decodedResponse = Main.jsonPostRequest(service.targetUrl, jsonData)
             return decodedResponse['result']
         
+        decodedResponse = Main.jsonGetRequest(service.targetUrl)
+        return decodedResponse['result']
 
+        
 
+    def printResults(results):
+        if type(results) != list and type(results) != dict:
+            print (results)
+            return
+        if type(results) == list:
+            for result in results:
+                Main.printResults(result)
+        if type(results) == dict:
+            for result in results:
+                Main.printResults(results[result])
 
 
     def start(services, variables, operations):
@@ -237,8 +255,7 @@ class Main:
         for operation in operations:
             results.append(Main.executeOperation(operation, services, variables))
 
-        for result in results:
-            print(result)
+        Main.printResults(results)
 
 
 
