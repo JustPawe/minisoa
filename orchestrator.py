@@ -141,8 +141,8 @@ class Main:
     def getInputTypeAndValue(value):
         child = value[0]
         inputType = child.tag
-        if inputType == "variable":
-            return InputVariable(inputType, child.text)
+        if inputType == "i_variable":
+            return InputVariable("variable", child.text)
         if inputType == "operation": 
             return InputVariable(inputType, Main.decodeOperationXML(child))
         if inputType == "conditional":

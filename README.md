@@ -1,5 +1,7 @@
 # MiniProject SOA
 
+The MiniProject SOA toolkit includes a generic `Orchestrator`, and tools for creating local services via Docker. The `Orchestrator` can be used to run a local SOA program with remote services as well.
+
 ## Installation
 
 _Requires python3, docker and docker-compose_
@@ -40,6 +42,10 @@ To get a full list of commands please use the `--help` option on the `./minisoa`
 # e.g creating a new service
 ./minisoa new
 ```
+
+## Docs
+- **For the XML Schema documentation** [click here](documentation/xmlinfo.md)
+- **For the generic information about the Services** [click here](documentation/service.md)
 
 ## Contact
 
